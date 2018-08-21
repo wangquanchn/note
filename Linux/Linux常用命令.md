@@ -33,3 +33,29 @@ LC_ALL=
 2018年 08月 20日 星期一 17:54:02 CST
 ```
 
+### 防火墙 ###
+
+- 停止firewall
+
+  ```shell
+  [root@localhost ~]# systemctl stop firewalld.service
+  ```
+
+- 禁止firewall开机启动
+
+  ```shell
+  [root@localhost ~]# systemctl disable firewalld.service
+  ```
+
+- 重启防火墙使配置生效
+
+  ```shell
+  [root@localhost ~]# systemctl restart iptables.service
+  ```
+
+- 设置防火墙开机启动
+
+  ```shell
+  [root@localhost ~]# systemctl enable iptables.service
+  ```
+
