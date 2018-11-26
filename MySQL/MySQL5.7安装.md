@@ -67,3 +67,117 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY 'root!!MYSQL1234';
 GRANT ALL PRIVILEGES ON . TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
 ```
 
+
+
+## 五、查看字符集
+
+显示所有变量：
+
+   ```mysql
+show variables like 'character%';
+   ```
+
+结果显示：
+
+```
++--------------------------+----------------------------+
+| Variable_name            | Value                      |
++--------------------------+----------------------------+
+| character_set_client     | utf8                       |
+| character_set_connection | utf8                       |
+| character_set_database   | latin1                     |
+| character_set_filesystem | binary                     |
+| character_set_results    | utf8                       |
+| character_set_server     | latin1                     |
+| character_set_system     | utf8                       |
+| character_sets_dir       | /usr/share/mysql/charsets/ |
++--------------------------+----------------------------+
+```
+
+此时，我们需要修改mysql的/etc/my.cnf 文件中的字符集键值：
+
+```shell
+vim /etc/my.cnf
+```
+
+在`[mysqld]`字段下加入`character_set_server=utf8`，如下：
+
+```ini
+[mysqld]
+
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+
+symbolic-links=0
+
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+
+character_set_server=utf8
+```
+
+修改完成后，使用`systemctl restart mysqld`重启mysql服务
+
+```shell
+systemctl restart mysqld
+```
+
+ 然后再次登录mysql，使用`show variables like 'character%';`查看
+
+```
++--------------------------+----------------------------+
+| Variable_name            | Value                      |
++--------------------------+----------------------------+
+| character_set_client     | utf8                       |
+| character_set_connection | utf8                       |
+| character_set_database   | utf8                       |
+| character_set_filesystem | binary                     |
+| character_set_results    | utf8                       |
+| character_set_server     | utf8                       |
+| character_set_system     | utf8                       |
+| character_sets_dir       | /usr/share/mysql/charsets/ |
++--------------------------+----------------------------+
+```
+
+此时，我们的字符集已经都修改完毕。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
