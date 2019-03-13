@@ -61,10 +61,28 @@ tar -zxvf openssl-1.0.1t.tar.gz
 ### 5. 安装nginx
 
 ```shell
-
+cd /data/files
+wget http://nginx.org/download/nginx-1.13.6.tar.gz
+tar -zxvf nginx-1.13.6.tar.gz
+cd nginx-1.13.6
+./configure --prefix=/data/program/nginx/nginx-1.13.6 \
+--sbin-path=/data/program/nginx/nginx-1.13.6/nginx \
+--conf-path=/data/program/nginx/nginx-1.13.6/nginx.conf \
+--pid-path=/data/program/nginx/nginx-1.13.6/nginx.pid \
+--with-http_ssl_module \
+--with-pcre=/usr/local/src/pcre-8.42 \
+--with-zlib=/usr/local/src/zlib-1.2.11 \
+--with-openssl=/usr/local/src/openssl-1.0.1t
+make
+make install
 ```
 
+### 6. 启动nginx
 
+```shell
+cd /data/program/nginx/nginx-1.13.6
+./nginx
+```
 
 
 
