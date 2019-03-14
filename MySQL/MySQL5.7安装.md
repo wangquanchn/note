@@ -51,7 +51,7 @@
 
 同时，5.7版本用了validate_password密码加强插件，因此在修改密码的时候绝对不是 123456 能糊弄过去的，需要严格按照规范去设置密码。
 
-这里我们登录后，使用如下命令修改默认密码：
+这里我们登录后，使用如下命令修改默认密码，这里我们把密码设置为`root!!MYSQL1234`：
 
 ```mysql
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'root!!MYSQL1234';
@@ -64,8 +64,30 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY 'root!!MYSQL1234';
 默认情况下其他服务器的客户端不能直接访问mysql服务端，需要对ip授权：
 
 ```mysql
-GRANT ALL PRIVILEGES ON . TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root!!MYSQL1234' WITH GRANT OPTION;
 ```
+
+授权完毕后，刷新一下权限：
+
+```mysql
+FLUSH PRIVILEGES;
+```
+
+
+
+例如：让newuser用户使用newpwd密码从IP：192.168.1.3主机链接到mysql服务器
+
+具体步骤：
+
+mysql>GRANT ALL PRIVILEGES ON *.* TO ‘newuser’@’192.168.1.3′ IDENTIFIED
+
+BY ‘newpwd’ WITH GRANT OPTION;
+
+mysql>flush privileges;
+
+grant语法：
+
+grant 权限名（所有的权限用all） on 库名（*全部）.表名（*全部） to ‘要授权的用户名’@’%’(%表示所有的IP，可以只些一个IP） identified by “密码”
 
 
 
@@ -74,7 +96,7 @@ GRANT ALL PRIVILEGES ON . TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
 显示所有变量：
 
    ```mysql
-show variables like 'character%';
+SHOW VARIABLES LIKE 'character%';
    ```
 
 结果显示：
@@ -124,7 +146,7 @@ systemctl restart mysqld
 
  然后再次登录mysql，使用`show variables like 'character%';`查看
 
-```
+```mysql
 +--------------------------+----------------------------+
 | Variable_name            | Value                      |
 +--------------------------+----------------------------+
