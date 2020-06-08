@@ -114,3 +114,88 @@ systemctl stop firewalld.service
 systemctl start firewalld.service
 ```
 
+
+
+
+
+
+
+
+
+### 一、安装编译工具及库文件
+
+```shell
+yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel
+```
+
+### 二、首先要安装 PCRE
+
+PCRE 作用是让 Nginx 支持 Rewrite 功能。
+
+1、下载 PCRE 安装包
+
+```shell
+cd /usr/local/src/
+wget http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz
+```
+
+2、解压安装包:
+
+```shell
+tar zxvf pcre-8.35.tar.gz
+```
+
+3、进入安装包目录
+
+```shell
+cd pcre-8.35
+```
+
+4、编译安装
+
+```shell
+./configure
+make && make install
+```
+
+5、查看pcre版本
+
+```shell
+pcre-config --version
+```
+
+
+
+### 三、安装SSL
+
+```shell
+yum -y install openssl openssl-devel
+```
+
+
+
+### 四、安装Nginx
+
+```shell
+mkdir -p /data/program/nginx
+cd /data/program/nginx
+
+yum install -y lrzsz
+rz 上传文件
+
+tar -zxvf nginx-1.13.6.tar.gz
+
+cd nginx-1.13.6
+
+./configure --prefix=/data/program/nginx/nginx-1.13.6 \
+--sbin-path=/data/program/nginx/nginx-1.13.6/nginx \
+--conf-path=/data/program/nginx/nginx-1.13.6/nginx.conf \
+--pid-path=/data/program/nginx/nginx-1.13.6/nginx.pid \
+--with-http_stub_status_module \
+--with-http_ssl_module \
+--with-pcre=/usr/local/src/pcre-8.35
+
+make
+make install
+```
+
