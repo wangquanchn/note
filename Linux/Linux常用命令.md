@@ -75,3 +75,25 @@ yum grouplist	查看系统中已经安装的软件包
 yum groupinstall 软件包组	安装指定的软件包组
 yum groupremove 软件包组	移除指定的软件包鲍
 yum groupinfo软件包组	查询指定的软件包组信息
+
+
+
+
+
+### 网络
+
+查看端口占用
+netstat --tunlp | grep {端口号}
+
+
+--- 文件
+
+在{XXX}文件夹内执行，将该文件夹内所有内容打包成zip格式
+zip -q -r {文件夹名字}.zip *
+
+MacOS X命令随手记
+
+--- 网络
+lsof -i :{端口号}
+
+根据业务类型，查询资质审核通过的供应商信息列表

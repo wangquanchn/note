@@ -43,3 +43,29 @@ sudo systemctl start docker
 sudo docker run hello-world
 ```
 
+
+
+
+
+
+
+
+
+
+
+## Docker命令
+
+进入容器
+
+```shell
+docker exec -it {容器名} /bin/bash
+```
+
+
+
+### Docker Library
+
+在这里能找到大多数官方image的Dockerfile
+
+`https://github.com/docker-library`
+

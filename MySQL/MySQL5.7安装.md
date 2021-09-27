@@ -63,7 +63,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY 'root!!MYSQL1234';
 
 默认情况下其他服务器的客户端不能直接访问mysql服务端，需要对ip授权：
 
-```mysql
+```sql
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root!!MYSQL1234' WITH GRANT OPTION;
 ```
 
@@ -166,6 +166,10 @@ systemctl restart mysqld
 
 
 
+
+```shell
+docker run -p 3306:3306 --name mysql -v /Users/wangquan/Program/Docker/volume/mysql/conf:/etc/mysql/conf.d -v /Users/wangquan/Program/Docker/volume/mysql/log:/var/log/mysql -v /Users/wangquan/Program/Docker/volume/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+```
 
 
 

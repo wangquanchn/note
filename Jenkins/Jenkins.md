@@ -13,7 +13,7 @@ tar -zxvf jdk-11.0.6_linux-x64_bin.tar.gz
 
 vim /etc/profile
 
-export JAVA_HOME=/data/program//jdk-11.0.6
+export JAVA_HOME=/data/program/java/jdk-11.0.6
 export JRE_HOME=${JAVA_HOME}/jre
 export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
 export PATH=${JAVA_HOME}/bin:$PATH
@@ -33,13 +33,13 @@ ln -s /data/program/java/jdk-11.0.6/bin/javac /usr/bin/javac
 ```shell
 mkdir -p /data/program/jenkins
 cd /data/program/jenkins
-wget https://mirrors.tuna.tsinghua.edu.cn/jenkins/redhat-stable/jenkins-2.204.3-1.1.noarch.rpm
+wget https://mirrors.tuna.tsinghua.edu.cn/jenkins/redhat-stable/jenkins-2.235.3-1.1.noarch.rpm
 ```
 
 安装：
 
 ```shell
-sudo yum install jenkins-2.204.3-1.1.noarch.rpm
+sudo yum install jenkins-2.235.3-1.1.noarch.rpm
 ```
 
 编辑配置：
@@ -58,7 +58,7 @@ JENKINS_PORT="8081"
 编辑配置：
 
 ```shell
-/etc/rc.d/init.d/jenkins
+vim /etc/rc.d/init.d/jenkins
 
 # 添加或修改jdk：candidates
 candidates="
@@ -135,6 +135,8 @@ yum install -y unzip zip
 mkdir -p /data/program/maven
 cd /data/program/maven
 
+yum install zip unzip
+
 rz [文件]
 unzip apache-maven-3.6.3-bin.zip
 
@@ -184,7 +186,8 @@ ln -s /data/program/node/node-v14.2.0-linux-x64/bin/node /usr/bin/
 把当前用户加入docker用户组
 
 ```
-gpasswd -a ${USER} docker
+sudo gpasswd -a jenkins docker
+sudo chmod 666 /var/run/docker.sock
 ```
 
 重启docker,jenkins
