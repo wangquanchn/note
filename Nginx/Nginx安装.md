@@ -32,7 +32,8 @@ cd /data
 cd /usr/local/src
 
 # wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.42.tar.gz 
-wget https://ftp.pcre.org/pub/pcre/pcre-8.42.tar.bz2
+# wget https://ftp.pcre.org/pub/pcre/pcre-8.42.tar.bz2
+wget https://ftp.halifax.rwth-aachen.de/osdn/sfnet/p/pc/pcre/pcre/8.42/pcre-8.42.tar.bz2
 
 tar -zxvf pcre-8.42.tar.gz
 cd pcre-8.42
@@ -68,16 +69,19 @@ cd /data/files
 wget http://nginx.org/download/nginx-1.13.6.tar.gz
 tar -zxvf nginx-1.13.6.tar.gz
 cd nginx-1.13.6
-./configure --prefix=/data/program/nginx/nginx-1.13.6 \
---sbin-path=/data/program/nginx/nginx-1.13.6/nginx \
---conf-path=/data/program/nginx/nginx-1.13.6/nginx.conf \
---pid-path=/data/program/nginx/nginx-1.13.6/nginx.pid \
+./configure --prefix=/data/program/nginx \
 --with-http_ssl_module \
 --with-pcre=/usr/local/src/pcre-8.42 \
 --with-zlib=/usr/local/src/zlib-1.2.11 \
 --with-openssl=/usr/local/src/openssl-1.0.1t
 make
 make install
+```
+
+nginx编译安装之-./configure 参数详解：
+
+```text
+https://www.cnblogs.com/flashfish/p/11025961.html
 ```
 
 ### 6. 启动nginx
@@ -308,6 +312,27 @@ server {
 
 
 
+
+
+
+
+查看防火墙状态
+
+```shell
+# 查看防火墙状态
+firewall-cmd --state
+# 查看端口
+firewall-cmd --list-ports
+# 添加端口
+firewall-cmd --zone=public --add-port=443/tcp --permanent
+# 重启
+firewall-cmd --reload
+```
+
+
+
+### 五、配置
+
 **当我们访问http://proxy_location/my_path时:**
 
 |                  |                     |                                      |
@@ -320,3 +345,45 @@ server {
 | /proxy_location/ | http://server/path/ | http://server/path/my_path           |
 | /proxy_location  | http://server/path  | http://server/path/my_path           |
 | /proxy_location  | http://server/path/ | http://server//my_path               |
+
+
+
+location指令说明，该语法用来匹配url，语法如下：
+
+```conf
+location[ = | ~ | ~* | ^~] url{
+}
+```
+
+1. =: 用于不含正则表达式的url前，要求字符串与url严格匹配，匹配成功就停止向下搜索并处理请求
+2. ~: 用于表示url包含正则表达式，并且区分大小写。
+3. ~*: 用于表示url包含正则表达式，并且不区分大瞎写
+4. ^~: 用于不含正则表达式的url前，要求ngin服务器找到表示url和字符串匹配度最高的location后，立即使用此location处理请求，而不再匹配
+5. 如果有url包含正则表达式，不需要有~开头标识
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
